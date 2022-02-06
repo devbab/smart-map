@@ -1,0 +1,36 @@
+{
+  "name": "@devbab/smart-map",
+  "version": "1.1.6",
+  "description": "Extend Google Map capabilities: Graphic layers, Advanced markers, geo type convert, Storage of zoom-center",
+  "main": "smart-map.js",
+  "scripts": {
+    "test": "webpack --config test.wp.config.js",
+    "eslint": "eslint *.js"
+  },
+  "author": "devbab",
+  "license": "ISC",
+  "dependencies": {
+    "@googlemaps/markerclusterer": "^1.0.22"
+  },
+  "devDependencies": {
+    "eslint": "^8.8.0",
+    "webpack": "^5.68.0",
+    "webpack-cli": "^4.9.2"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "files": [
+    "README.md",
+    ".eslintrc.json",
+    "package.json",
+    "icons",
+    "map-layer.js",
+    "smart-map.js",
+    "smart-marker.js",
+    "test.html",
+    "test.js",
+    "test.wp.config.js",
+    "zoom-center.js"
+  ]
+}

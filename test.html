@@ -1,0 +1,57 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Test Smart-map</title>
+
+
+    <style type="text/css">
+        #map {
+            width: 900px;
+            height: 600px;
+            background: green;
+        }
+
+        #column1 {
+            width: 300px;
+            vertical-align: top;
+            vertical-align: text-top;
+        }
+
+        td {
+            border: 1px solid #333;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <tr>
+            <td>
+                <button type="button" id="showRed">Show Red</button>
+                <button type="button" id="hideRed">Hide Red</button>
+                <button type="button" id="showBlue">Show Blue</button>
+                <button type="button" id="hideBlue">Hide Blue</button>
+&nbsp;
+                <button type="button" id="showCluster">Show Red as cluster</button>
+                <button type="button" id="emptyCluster">Empty cluster</button> 
+                &nbsp;
+                <button type="button" id="emptyMarkers">Empty Markers</button>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div id="map"></div>
+            </td>
+        </tr>
+
+    </table>
+
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAv0dCTKNxtZnIcKJeQyEdVbBCljzAaaig"></script>
+    <script src="dist/test.bundle.js"></script>
+</body>
+
+</html>
