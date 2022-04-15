@@ -127,6 +127,7 @@ function hide(layer = null) {
 function empty(name) {
 
     let listNames = _getLayersName(name);
+    if (!listNames) return;
 
     listNames.forEach(name => {
         const layerContent = TheList.get(name);
