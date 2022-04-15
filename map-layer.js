@@ -43,7 +43,6 @@ function _getLayersName(name) {
             return layerName.match(name);
         });
 
-    console.log(`_getLayersName`, layersName);
     return layersName;
 }
 
@@ -59,7 +58,6 @@ function _getLayersContentFromName(name) {
     if (!listNames) return null;
 
     const list = listNames.map(name => TheList.get(name));
-    console.log(`_getLayersContentFromName result `, name, list);
     return list;
 
 }
@@ -75,7 +73,6 @@ function show(map, layerName) {
     if (!layers) return;
 
     layers.forEach(layer => {
-        console.log(`layer`, layer);
         if (!layer) return;
         layer.forEach(e => { e.setMap(map) })
     })
@@ -107,7 +104,6 @@ function showCluster(map, layerName = null) {
 
 function emptyCluster() {
     if (TheCluster) {
-        //       console.log("empty Cluster");
         TheCluster.clearMarkers();
         empty(TheClusterLayerName); // delete also markers in the list
         TheClusterLayerName = null;
