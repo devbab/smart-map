@@ -15,6 +15,8 @@ let TheClusterLayerName = null; // name of layer used for cluser
 
 // add an object in a list, with associated layer
 function add(object, layerName = null) {
+    if (typeof layerName !== "string") throw (`layer name should be a string`)
+
     let _layer = TheList.get(layerName);
     if (!_layer)
         TheList.set(layerName, [object]);
@@ -24,15 +26,60 @@ function add(object, layerName = null) {
 
 
 /**
+ * get array of names matching the name which is string or RegExp
+ * @param {*} name 
+ * @returns 
+ */
+function _getLayersName(name) {
+
+    // name is not a regexp, return simply the name if found in TheList
+    if (typeof name == "string")
+        if (TheList.has(name)) return [name];
+        else return null;
+
+
+    let layersName = Array.from(TheList.keys())
+        .filter(layerName => {
+            return layerName.match(name);
+        });
+
+    console.log(`_getLayersName`, layersName);
+    return layersName;
+}
+
+
+/**
+ * return array of layers entries
+ * @param {string | regexp} name name/regex of the layer
+ * @return array of layer name
+ */
+function _getLayersContentFromName(name) {
+
+    let listNames = _getLayersName(name);
+    if (!listNames) return null;
+
+    const list = listNames.map(name => TheList.get(name));
+    console.log(`_getLayersContentFromName result `, name, list);
+    return list;
+
+}
+
+/**
  * Show all items in the layer
  * @param {map.google} map - google.map element on which to show the layer
  * @param {String} layer - layer name
  */
-function show(map, layerName = null) {
+function show(map, layerName) {
 
-    const _layer = TheList.get(layerName);
-    if (!_layer) return;
-    _layer.forEach(e => { e.setMap(map) })
+    const layers = _getLayersContentFromName(layerName); //return list of Map entries that match layer name
+    if (!layers) return;
+
+    layers.forEach(layer => {
+        console.log(`layer`, layer);
+        if (!layer) return;
+        layer.forEach(e => { e.setMap(map) })
+    })
+
 }
 
 /**
@@ -41,6 +88,8 @@ function show(map, layerName = null) {
  * @param {String} layer layer name
  */
 function showCluster(map, layerName = null) {
+    if (typeof name !== "string") throw (`layername is not a string`)
+
     const _layer = TheList.get(layerName);
     if (!_layer) return;
 
@@ -76,21 +125,30 @@ function hide(layer = null) {
 }
 
 /**
- * Empty the layer
+ * Empty the layer(s)
  * @param {String} layer - name of layer ot empty
  */
-function empty(layerName = null) {
-    hide(layerName); // not visible anymore
-    TheList.set(layerName, []);
+function empty(name) {
+
+    let listNames = _getLayersName(name);
+
+    listNames.forEach(name => {
+        const layerContent = TheList.get(name);
+        layerContent.forEach(e => { e.setMap(null) }); // hide each element
+
+        TheList.delete(name); // delete the entry
+    });
+
 }
 
 /**
- * 
- * @param {*} layer - layer name
- * @returns returns all elements in the layer
+ *  returns an array of list of elements
+ * @param {string | regexp} layer - layer name
+ * @returns list of list of elements
  */
 function list(layerName) {
-    return TheList.get(layerName);
+    return _getLayersContentFromName(layerName); //return list of Map entries that match layer name
+
 }
 
 
