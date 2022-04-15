@@ -41,6 +41,20 @@ function _initMap() {
         position: { latitude: 48.85, longitude: 2.3 }
     });
 
+    let name = "red";
+    console.log(`list for ${name}  should be empty`, ml.list(name));
+    name = /red/;
+    console.log(`list for ${name}  should be empty`, ml.list(name));
+
+    console.log(`adding a marker in regexp layer`);
+    sm.add({
+        layer: /red/,
+        title: `Title`,
+        position: { lat: 48.8, lng: 2.3 },
+
+    });
+
+
 
     let count = 0;
 
@@ -60,26 +74,35 @@ function _initMap() {
             position: coord,
             url: "icons/place_blue_36dp.svg",
             drag: {
-                callback: (pos, payload) => { console.log(`dragged to ${pos.toString()} with payload ${payload}`) },
+                callback: (pos, payload) => { console.log(`dragged to ${pos.toString()} with payload ${payload} `) },
                 payload: count++
             },
             infowindow: {
                 //map: mapgoogle, not needed
                 unique: true,
-                payload: `This is infowindow ${count}`
+                payload: `This is infowindow ${count} `
             }
         });
+
+
 
         coord.lng += 0.03;
         sm.add({
             map: mapgoogle, // to be displayed immediately
             layer: "red",
-            title: `Title ${count}`,
+            title: `Title ${count} `,
             position: coord,
             url: "icons/place_red_36dp.svg",
         });
         const list = ml.list("red");
-        console.log("red", list.map(elt => elt.getTitle()));
+        console.log(`list of red`, list)
+
+        if (list)
+            list.forEach(layerList => {
+                const titles = layerList.map(elt => elt.getTitle());
+                console.log("red", titles);
+
+            })
 
 
     });
@@ -90,6 +113,11 @@ function _initMap() {
     $("#showRed").click("red", showMarkers);
     $("#hideBlue").click("blue", hideMarkers);
     $("#showBlue").click("blue", showMarkers);
+
+
+    $("#showE").click(/(e)/, showMarkers);
+    $("#hideE").click(/(e)/, hideMarkers);
+    $("#emptyE").click(/(e)/, emptyMarkers);
 
     $("#showCluster").click(showCluster);
     $("#emptyCluster").click(emptyCluster);
@@ -102,6 +130,7 @@ function _initMap() {
 
 function showMarkers(e) {
     console.log("show", e.data);
+
     ml.show(mapgoogle, e.data);
 }
 function hideMarkers(e) {
@@ -118,9 +147,9 @@ function emptyCluster() {
     ml.emptyCluster(mapgoogle, "red");
 }
 
-function emptyMarkers() {
-    ml.empty("red");
-    ml.empty("blue");
+function emptyMarkers(e) {
+    console.log("empty", e.data);
+    ml.empty(e.data);
 }
 
 _initMap();
