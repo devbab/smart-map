@@ -15,7 +15,7 @@ This requires the use of webpack for inclusion into front-end Web pages.
 Have a look at:
 - test.html for HTML page
 - test.js for Javascript
-- tes.wp.config.js for Webpack configuration
+- test.wp.config.js for Webpack configuration
 
 ## More icons
 
