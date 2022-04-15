@@ -29,11 +29,11 @@ let _uniqueInfoWindow = new google.maps.InfoWindow();
 function add(settings) {
 
     if (!settings) return null;
-    if (!settings.position) return null;
-    //   if (!settings.map) return null;
 
     // both location and positions are identical
     if (settings.location) settings.position = settings.location;
+    if (!settings.position) throw `no coordinates provided for smart-marker`;
+
 
     // convert form latitude,longitude if needs be
     if (settings.position.latitude)
@@ -77,7 +77,9 @@ function add(settings) {
     }
 
     // add to layer if present
-    if (settings.layer) { ml.add(marker, settings.layer); }
+    if (settings.layer)
+        ml.add(marker, settings.layer);
+
     return marker;
 }
 
